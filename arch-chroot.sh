@@ -16,7 +16,7 @@ timezone_config(){
 
 language_system(){
   #sed -i -r 's/^#(.*pt_BR.UTF-8 UTF-8.*)$/\1/' /etc/locale.gen
-  sed -i '177s/^#//' /etc/locale.gen
+  sed -i '393s/^#//' /etc/locale.gen
   clear && locale-gen
   echo LANG=pt_BR.UTF-8 > /etc/locale.conf
   export LANG=pt_BR.UTF-8
