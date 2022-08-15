@@ -4,7 +4,7 @@
 # João Pedro Pierri
 # @joaoppierri
 
-networkmanager(){
+networkmanager_enable(){
  pacman -S networkmanager -noconfirm
  systemctl enable NetworkManager
 }
@@ -105,7 +105,7 @@ finish_install(){
   clear && read -p 'Instalação finalizada, NÃO ESQUEÇA DE SAIR DO CHROOT(CTRL + D) E REBOOTAR O PC!!! PRESSIONE ENTER PARA CONTINUAR...' && exit 0
 }
 
-dhcpcd_enable
+networkmanager_enable
 timezone_config
 language_system
 keymap_config
