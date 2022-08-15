@@ -1,26 +1,25 @@
 #!/usr/bin/env bash
 
 # Script archlinux chroot
-# Franklin Souza
-# @FranklinTech
+# João Pedro Pierri
+# @joaoppierri
 
-dhcpcd_enable(){
-  clear
-  systemctl enable dhcpcd
+networkmanager(){
+ pacman -S networkmanager -noconfirm
+ systemctl enable NetworkManager
 }
 
 timezone_config(){
-  ln -sf /usr/share/zoneinfo/America/Recife /etc/localtime
   hwclock --systohc
   timedatectl set-ntp true
 }
 
 language_system(){
-  #sed -i -r 's/^#(.*en_US.UTF-8 UTF-8.*)$/\1/' /etc/locale.gen
+  #sed -i -r 's/^#(.*pt_BR.UTF-8 UTF-8.*)$/\1/' /etc/locale.gen
   sed -i '177s/^#//' /etc/locale.gen
   clear && locale-gen
-  echo LANG=en_US.UTF-8 > /etc/locale.conf
-  export LANG=en_US.UTF-8
+  echo LANG=pt_BR.UTF-8 > /etc/locale.conf
+  export LANG=pt_BR.UTF-8
   read -p 'LOCALE configurado, PRESSIONE ENTER PARA CONTINUAR...'
 }
 
@@ -39,19 +38,10 @@ btrfs_progs_config(){
 }
 
 kernels_download(){
-  clear && printf "Escolha seu kernel de preferência:\n\n[1] - linux (Kernel defautl)\n[2] - linux-hardened (Kernel focado na segurança)\n[3] - linux-lts (Kernel a longo prazo)\n[4] - linux-zen (Kernel focado em desempenho)\n\n"
+  clear && printf "Escolha seu kernel de preferência:\n\n[1] - linux-zen (Kernel focado em desempenho)\n\n"
   read KERNEL_CHOICE
   if [ $KERNEL_CHOICE == '1' ] || [ $KERNEL_CHOICE == '01' ] ; then
-    clear && pacman -S linux linux-headers --noconfirm
-
-  elif [ $KERNEL_CHOICE == '2' ] || [ $KERNEL_CHOICE == '02' ] ; then
-    clear && pacman -S linux-hardened linux-hardened-headers --noconfirm
-
-  elif [ $KERNEL_CHOICE == '3' ] || [ $KERNEL_CHOICE == '03' ] ; then
-    clear && pacman -S linux-lts linux-lts-headers --noconfirm
-
-  elif [ $KERNEL_CHOICE == '4' ] || [ $KERNEL_CHOICE == '04' ] ; then
-    clear && pacman -S linux-zen linux-zen-headers --noconfirm
+    clear && pacman -S linux linux-zen-headers --noconfirm
 
   else
     read -p 'Opção invalida, POR FAVOR ESCOLHA UM KERNEL, PRESSIONE ENTER PARA CONTINUAR...' && kernels_download
@@ -82,18 +72,12 @@ user_create(){
   clear && printf "Criando usuario, escolha seu shell de preferência:\n\n[1] - bash\n[2] - zsh\n\n"
   read SHELL_CHOICE
   if [ $SHELL_CHOICE == '1' ] || [ $SHELL_CHOICE == '01' ] ; then
-    clear && pacman -S bash --noconfirm
-    clear && printf "Digite o nome do seu usuario abaixo (COM LETRAS MINUSCULAS SEM ACENTOS E SEM ESPAÇOS):\n\n"
-    read USERNAME
-    clear && useradd -m -g users -G wheel -s /bin/bash "$USERNAME"
-
-  elif [ $SHELL_CHOICE == '2' ] || [ $SHELL_CHOICE == '02' ] ; then
     clear && pacman -S zsh --noconfirm
     clear && printf "Digite o nome do seu usuario abaixo (COM LETRAS MINUSCULAS SEM ACENTOS E SEM ESPAÇOS):\n\n"
     read USERNAME
     clear && useradd -m -g users -G wheel -s /bin/zsh "$USERNAME"
 
-  else
+    else
     read -p 'Opção invalida, por favor tente novamente PRESSIONE ENTER PARA CONTINUAR...' && user_create
   fi
 }
@@ -118,7 +102,7 @@ grub_install(){
 }
 
 finish_install(){
-  clear && read -p 'Instalação finalizada, NÃO ESQUEÇA DE SAIR DO CHROOT E REBOOTAR O PC!!! PRESSIONE ENTER PARA CONTINUAR...' && exit 0
+  clear && read -p 'Instalação finalizada, NÃO ESQUEÇA DE SAIR DO CHROOT(CTRL + D) E REBOOTAR O PC!!! PRESSIONE ENTER PARA CONTINUAR...' && exit 0
 }
 
 dhcpcd_enable
