@@ -4,7 +4,7 @@
 # João Pedro Pierri
 # @joaoppierri
 
-networkmanager(){
+networkmanager_enable(){
  pacman -S networkmanager -noconfirm
  systemctl enable NetworkManager
 }
@@ -38,7 +38,7 @@ btrfs_progs_config(){
 }
 
 kernels_download(){
-  clear && printf "Escolha seu kernel de preferência:\n\n[1] - linux-zen (Kernel focado em desempenho)\n\n"
+  clear && printf "Escolha seu kernel de preferência:\n\n[1] - linux-zen-headers (Kernel focado em desempenho)\n\n"
   read KERNEL_CHOICE
   if [ $KERNEL_CHOICE == '1' ] || [ $KERNEL_CHOICE == '01' ] ; then
     clear && pacman -S linux linux-zen-headers --noconfirm
@@ -69,7 +69,7 @@ password_root(){
 }
 
 user_create(){
-  clear && printf "Criando usuario, escolha seu shell de preferência:\n\n[1] - bash\n[2] - zsh\n\n"
+  clear && printf "Criando usuario, escolha seu shell de preferência:\n\n[1] - zsh\n[2]"
   read SHELL_CHOICE
   if [ $SHELL_CHOICE == '1' ] || [ $SHELL_CHOICE == '01' ] ; then
     clear && pacman -S zsh --noconfirm
@@ -105,7 +105,7 @@ finish_install(){
   clear && read -p 'Instalação finalizada, NÃO ESQUEÇA DE SAIR DO CHROOT(CTRL + D) E REBOOTAR O PC!!! PRESSIONE ENTER PARA CONTINUAR...' && exit 0
 }
 
-dhcpcd_enable
+networkmanager_enable
 timezone_config
 language_system
 keymap_config
