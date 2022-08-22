@@ -5,7 +5,7 @@
 # @joaoppierri
 
 networkmanager_enable(){
- pacman -S networkmanager -noconfirm
+ pacman -Syy networkmanager -noconfirm
  systemctl enable NetworkManager
 }
 
