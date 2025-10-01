@@ -15,11 +15,11 @@ timezone_config(){
 }
 
 language_system(){
-  #sed -i -r 's/^#(.*pt_BR.UTF-8 UTF-8.*)$/\1/' /etc/locale.gen
-  sed -i '393s/^#//' /etc/locale.gen
+  #sed -i -r 's/^#(.*pt_PT.UTF-8 UTF-8.*)$/\1/' /etc/locale.gen
+  sed -i '393s/^#//' /etc/locale.gen   # <-- confirma a linha correta para pt_PT.UTF-8
   clear && locale-gen
-  echo LANG=pt_BR.UTF-8 > /etc/locale.conf
-  export LANG=pt_BR.UTF-8
+  echo LANG=pt_PT.UTF-8 > /etc/locale.conf
+  export LANG=pt_PT.UTF-8
   read -p 'LOCALE configurado, PRESSIONE ENTER PARA CONTINUAR...'
 }
 
