@@ -154,7 +154,7 @@ initramfs_rebuild(){
 }
 
 users_config(){
-  msg "Palavra-passe do root"
+  msg "Palavra-passe para o root"
   until passwd root; do :; done
   useradd -m -G wheel -s /bin/zsh "$USERNAME"
   msg "Palavra-passe de $USERNAME"
